@@ -5,7 +5,7 @@ pub enum MarkupState {
     Lower,
 }
 
-fn eval_char(c: char, state: &MarkupState) -> (Option<char>, MarkupState) {
+pub fn eval_char(c: char, state: &MarkupState) -> (Option<char>, MarkupState) {
     use MarkupState::*;
     match (state, c) {
         (Normal, '#') => (None, Comment),
@@ -21,7 +21,7 @@ fn eval_char(c: char, state: &MarkupState) -> (Option<char>, MarkupState) {
     }
 }
 
-fn parse_markup(markup_text: &str) -> String {
+pub fn parse_markup(markup_text: &str) -> String {
     let initial_state = ("".to_owned(), MarkupState::Normal);
     let fold_fn = |(parsed_text, current_state), current_char| {
         let (output, new_state) = eval_char(current_char, &current_state);
